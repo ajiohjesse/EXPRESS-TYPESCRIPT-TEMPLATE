@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 # Add permissions block
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   format:
@@ -17,7 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
@@ -49,13 +53,16 @@ jobs:
         run: |
           pnpm install
 
+      - name: Check formatting
+        run: pnpm prettier --check "**/*.{js,jsx,ts,tsx,json,css,scss,md,yml,yaml}" || (echo "Code is not formatted. Running formatter..." && exit 0)
+
       - name: Run Prettier
-        run: pnpm prettier --write .
+        run: pnpm prettier --write "**/*.{js,jsx,ts,tsx,json,css,scss,md,yml,yaml}"
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'style: format code with prettier'
-          branch: main
+          branch: ${{ github.head_ref || github.ref_name }}
           commit_options: '--no-verify'
           push_options: '--force'
