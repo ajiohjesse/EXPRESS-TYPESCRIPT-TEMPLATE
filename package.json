@@ -1,0 +1,53 @@
+{
+  "name": "express-typescript-template",
+  "version": "1.0.0",
+  "description": "A template for building a REST API using Express and TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "dev": "bun --hot src/server.ts",
+    "build": "rimraf dist && esbuild src/server.ts --bundle --platform=node --outfile=dist/index.js",
+    "start": "node dist/index.js",
+    "clean": "rimraf dist",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "format": "prettier --write .",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "express",
+    "typescript",
+    "drizzle",
+    "postgres"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "better-sse": "^0.14.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.39.3",
+    "envalid": "^8.0.0",
+    "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^8.0.0",
+    "pg": "^8.13.3",
+    "rate-limiter-flexible": "^5.0.5",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.4",
+    "@vitest/coverage-v8": "^3.0.5",
+    "drizzle-kit": "^0.30.4",
+    "esbuild": "^0.25.0",
+    "prettier": "^3.5.1",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}

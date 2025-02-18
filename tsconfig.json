@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+
+    "lib": ["es2022"],
+    "moduleDetection": "force",
+    "baseUrl": ".",
+
+    "module": "preserve",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "resolveJsonModule": true,
+    "allowJs": true,
+
+    "strict": true,
+    "noImplicitOverride": true,
+    "noEmit": true,
+
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*",
+    "drizzle.config.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": ["node_modules"]
+}
