@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -25,6 +27,7 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 8
+          run_install: false
 
       - name: Get pnpm store directory
         shell: bash
@@ -40,7 +43,8 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm install
 
       - name: Run tests
         run: pnpm test
