@@ -12,6 +12,7 @@ class PostController {
     if (!userId) throw authenticationError;
 
     const post = requestValidator.validateBody(req.body, createPostSchema);
+
     const createdPost = await postService.createPost(post);
     broadcastNewPost(createdPost);
 
