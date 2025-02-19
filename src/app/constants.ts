@@ -1,5 +1,10 @@
 export const API_ROUTES = {
   HEALTH_CHECK: '/health-check',
+  SSE: '/sse',
+  POST: {
+    CREATE: '/posts',
+    GET: '/posts/:id',
+  },
   LOGS: {
     GET_LOGS: '/logs',
     GET_LOG_FILE: '/logs/:filename',
