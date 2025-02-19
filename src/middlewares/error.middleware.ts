@@ -1,4 +1,5 @@
 import { PublicError } from '@/helpers/errors/public-error';
+import logger from '@/helpers/logger';
 import { sendResponse } from '@/helpers/response';
 import type { ErrorRequestHandler } from 'express';
 import { z } from 'zod';
@@ -14,7 +15,11 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
       data: err.data ?? null,
     });
   } else {
-    console.error('Unhandled Error: --> ', err);
+    logger.error('Unhandled Error:', {
+      error: err,
+      url: req.url,
+      method: req.method,
+    });
     sendResponse(res, {
       type: 'error',
       statusCode: 500,
