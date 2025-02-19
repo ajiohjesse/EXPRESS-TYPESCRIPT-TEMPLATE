@@ -6,11 +6,10 @@
   "type": "module",
   "scripts": {
     "dev": "bun --hot src/server.ts",
-    "build": "rimraf dist && esbuild src/server.ts --bundle --platform=node --outfile=dist/index.js",
-    "postbuild": "mkdir -p logs",
+    "build": "esbuild src/server.ts --bundle --platform=node --format=esm --outfile=dist/index.js",
     "start": "node dist/index.js",
     "clean": "rimraf dist",
-    "clean:logs": "rimraf logs/*.log",
+    "clean:logs": "rimraf logs",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "format": "prettier --write .",
