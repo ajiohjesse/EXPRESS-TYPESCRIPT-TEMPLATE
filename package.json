@@ -12,9 +12,13 @@
     "clean:logs": "rimraf logs",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "format": "prettier --write .",
     "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "check": "pnpm lint && pnpm format:check"
   },
   "keywords": [
     "express",
@@ -44,6 +48,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@eslint/js": "^9.20.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
@@ -51,11 +56,15 @@
     "@vitest/coverage-v8": "^3.0.5",
     "drizzle-kit": "^0.30.4",
     "esbuild": "^0.25.0",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "globals": "^15.15.0",
     "prettier": "^3.5.1",
     "prettier-plugin-organize-imports": "^4.1.0",
     "rimraf": "^6.0.1",
     "supertest": "^7.0.0",
     "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.5"
   }

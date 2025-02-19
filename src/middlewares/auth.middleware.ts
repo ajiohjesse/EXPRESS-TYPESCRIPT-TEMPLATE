@@ -1,4 +1,5 @@
 import { authenticationError } from '@/helpers/errors';
+import logger from '@/helpers/logger';
 import { type RequestHandler } from 'express';
 
 export const authMiddleware: RequestHandler = (req, res, next) => {
@@ -6,7 +7,7 @@ export const authMiddleware: RequestHandler = (req, res, next) => {
   if (!bearerToken) throw authenticationError;
 
   const token = bearerToken.split(' ')[1];
-  console.log(token);
+  logger.info(token);
 
   //decode token to get userId
 

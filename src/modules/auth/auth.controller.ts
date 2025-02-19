@@ -1,4 +1,5 @@
 import { authenticationError } from '@/helpers/errors';
+import logger from '@/helpers/logger';
 import requestValidator from '@/helpers/request-validator';
 import type { RequestHandler } from 'express';
 import { z } from 'zod';
@@ -14,7 +15,7 @@ class AuthController {
       body: z.object({ name: z.string() }),
     });
 
-    console.log(body);
+    logger.info(body);
 
     sendResponse<typeof loginResponseSchema>(res, {
       type: 'success',

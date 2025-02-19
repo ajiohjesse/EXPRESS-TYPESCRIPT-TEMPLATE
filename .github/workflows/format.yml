@@ -1,4 +1,4 @@
-name: Format Code
+name: Format and Lint Code
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  format:
+  format-and-lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -51,15 +51,18 @@ jobs:
           pnpm install
 
       - name: Check formatting
-        run: pnpm prettier --check "**/*.{js,jsx,ts,tsx,json,css,scss,md,yml,yaml}" || (echo "Code is not formatted. Running formatter..." && exit 0)
+        run: pnpm format:check || (echo "Code is not formatted. Running formatter..." && exit 0)
 
       - name: Run Prettier
-        run: pnpm prettier --write "**/*.{js,jsx,ts,tsx,json,css,scss,md,yml,yaml}"
+        run: pnpm format"
+
+      - name: Run ESLint
+        run: pnpm lint || (echo "Linting failed. Attempting to fix..." && pnpm lint:fix)
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'style: format code with prettier'
+          commit_message: 'style: format code and fix lint issues'
           branch: ${{ github.head_ref || github.ref_name }}
           commit_options: '--no-verify'
           push_options: '--force'

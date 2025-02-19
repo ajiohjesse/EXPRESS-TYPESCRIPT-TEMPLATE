@@ -55,14 +55,9 @@ const logger = winston.createLogger({
 
 // Export a function to get all log files
 export const getLogFiles = async (): Promise<string[]> => {
-  return new Promise((resolve, reject) => {
-    const fs = require('fs').promises;
-    fs.readdir(logDir)
-      .then((files: string[]) => {
-        resolve(files.filter(file => file.endsWith('.log')));
-      })
-      .catch(reject);
-  });
+  const files = await import('fs/promises');
+  const allFiles = await files.readdir(logDir);
+  return allFiles.filter(file => file.endsWith('.log'));
 };
 
 export default logger;

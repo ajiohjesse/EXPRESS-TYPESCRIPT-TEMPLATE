@@ -4,9 +4,11 @@ import { sendResponse } from '@/helpers/response';
 import type { ErrorRequestHandler } from 'express';
 import { z } from 'zod';
 
-const errorDataSchema = z.record(z.string(), z.unknown()).nullable();
+const errorDataSchema = z
+  .record(z.string(), z.unknown())
+  .nullable() satisfies z.ZodSchema;
 
-export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   if (err instanceof PublicError) {
     sendResponse<typeof errorDataSchema>(res, {
       type: 'error',

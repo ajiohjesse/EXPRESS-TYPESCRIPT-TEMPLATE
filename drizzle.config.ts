@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { env, getEnvFile } from '@/helpers/env';
 import { defineConfig } from 'drizzle-kit';
 
