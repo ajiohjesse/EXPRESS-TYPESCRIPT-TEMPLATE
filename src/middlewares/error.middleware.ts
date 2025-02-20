@@ -17,9 +17,18 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
       data: err.data ?? null,
     });
   } else {
+    // Properly capture error details with limited stack trace
+    const stackLines = err.stack?.split('\n').slice(0, 5).join('\n');
+    const errorDetails = {
+      name: err.name,
+      message: err.message,
+      stack: stackLines,
+      ...(err instanceof Error ? err : {}), // Include any additional properties if available
+    };
+
     logger.error({
       message: 'Unhandled Error',
-      error: JSON.stringify(err),
+      error: errorDetails,
       url: req.url,
       method: req.method,
     });

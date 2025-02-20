@@ -6,7 +6,7 @@ import { postEventChannel } from '../post/post.event';
 const router = Router();
 export { router as sseRoute };
 
-router.get(END_PONITS.SSE, async (req, res) => {
+router.get(END_PONITS.SSE.BASE, async (req, res) => {
   const session = await createSession(req, res);
   postEventChannel.register(session);
 });

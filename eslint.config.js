@@ -7,6 +7,7 @@ import tseslint from 'typescript-eslint';
 export default [
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
+
     languageOptions: {
       globals: globals.node,
       ecmaVersion: 'latest',
@@ -21,5 +22,22 @@ export default [
       '@typescript-eslint/no-unused-vars': 'off',
       'no-console': 'warn',
     },
+  },
+  {
+    ignores: [
+      'node_modules',
+      'dist',
+      'logs',
+      'build',
+      'coverage',
+      '.git',
+      '*.min.js',
+      '*.config.js',
+      'public',
+      'temp',
+      '.cache',
+      '.env*',
+      '*.lock',
+    ],
   },
 ];
