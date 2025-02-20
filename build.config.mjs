@@ -7,9 +7,9 @@ await esbuild.build({
   format: 'cjs',
   outfile: 'dist/index.js',
   external: ['swagger-ui-express'],
-  copyFiles: true,
   loader: {
     '.html': 'copy',
     '.css': 'copy',
   },
+  minify: true,
 });

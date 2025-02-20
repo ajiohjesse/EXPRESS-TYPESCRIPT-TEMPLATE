@@ -1,5 +1,4 @@
 import { END_PONITS } from '@/app/endpoints';
-import { env } from '@/helpers/env';
 import logger from '@/helpers/logger';
 import morgan from 'morgan';
 
@@ -10,15 +9,9 @@ const stream = {
   },
 };
 
-// Create Morgan middleware with different formats for development and production
-const requestLogger = morgan(
-  env.isDev
-    ? 'dev' // Concise output colored by response status for development
-    : ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', // More detailed logging for production
-  {
-    stream,
-    skip: req => req.url === END_PONITS.HEALTH_CHECK, // Skip logging health check requests
-  }
-);
+const requestLogger = morgan('combined', {
+  stream,
+  skip: req => req.url === END_PONITS.HEALTH_CHECK,
+});
 
 export default requestLogger;
