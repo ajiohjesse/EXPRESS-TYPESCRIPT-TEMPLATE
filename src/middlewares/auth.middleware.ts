@@ -2,14 +2,15 @@ import { authenticationError } from '@/helpers/errors';
 import logger from '@/helpers/logger';
 import { type RequestHandler } from 'express';
 
-export const authMiddleware: RequestHandler = (req, res, next) => {
+export const authMiddleware: RequestHandler = async (req, res, next) => {
   const bearerToken = req.headers.authorization;
   if (!bearerToken) throw authenticationError;
 
-  const token = bearerToken.split(' ')[1];
-  logger.info(token);
+  logger.info(`Bearer token received: ${bearerToken}`);
 
-  //decode token to get userId
+  const token = bearerToken.split(' ')[1];
+
+  logger.info(token);
 
   res.locals.userId = 'user-id';
   next();

@@ -8,6 +8,7 @@ export const env = cleanEnv(process.env, {
   DATABASE_URL: str({
     default: testOnly('postgresql://test:test@localhost:5432/test_db'),
   }),
+  ADMIN_TOKEN: str({ default: testOnly('admin') }),
 });
 
 export function getEnvFile() {

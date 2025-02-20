@@ -1,19 +1,29 @@
-import { API_ROUTES } from '@/app/constants';
+import { END_PONITS } from '@/app/endpoints';
+import { env } from '@/helpers/env';
+import { forbiddenError } from '@/helpers/errors';
 import { getLogFiles } from '@/helpers/logger';
 import { sendResponse } from '@/helpers/response';
-import { Router } from 'express';
+import { Router, type RequestHandler } from 'express';
 import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
+
 const router = Router();
 export { router as logsRoute };
+
+const authorizeLogsAccess: RequestHandler = async (req, _res, next) => {
+  const bearerToken = req.headers.authorization;
+  if (!bearerToken || bearerToken.split(' ')[1] !== env.ADMIN_TOKEN)
+    throw forbiddenError;
+  next();
+};
 
 const logFilesSchema = z.object({
   logs: z.array(z.string()),
 });
 
 // Get list of available log files
-router.get(API_ROUTES.LOGS.GET_LOGS, async (_, res) => {
+router.get(END_PONITS.LOGS, authorizeLogsAccess, async (_, res) => {
   try {
     const logFiles = await getLogFiles();
     sendResponse<typeof logFilesSchema>(res, {
@@ -35,12 +45,11 @@ router.get(API_ROUTES.LOGS.GET_LOGS, async (_, res) => {
 });
 
 // Download a specific log file
-router.get(API_ROUTES.LOGS.GET_LOG_FILE, (req, res) => {
+router.get(END_PONITS.LOGS + '/:filename', authorizeLogsAccess, (req, res) => {
   const filename = req.params.filename;
   const logDir = 'logs';
   const filePath = path.join(process.cwd(), logDir, filename);
 
-  // Check if file exists and ends with .log
   if (!filename.endsWith('.log') || !fs.existsSync(filePath)) {
     return sendResponse(res, {
       type: 'error',

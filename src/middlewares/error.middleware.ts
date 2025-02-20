@@ -17,11 +17,13 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
       data: err.data ?? null,
     });
   } else {
-    logger.error('Unhandled Error:', {
-      error: err,
+    logger.error({
+      message: 'Unhandled Error',
+      error: JSON.stringify(err),
       url: req.url,
       method: req.method,
     });
+
     sendResponse(res, {
       type: 'error',
       statusCode: 500,

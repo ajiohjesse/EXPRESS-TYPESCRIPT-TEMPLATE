@@ -1,11 +1,11 @@
-import { API_ROUTES } from '@/app/constants';
+import { END_PONITS } from '@/app/endpoints';
 import { sendResponse } from '@/helpers/response';
 import { Router } from 'express';
 
 const router = Router();
 export { router as healthCheckRoute };
 
-router.get(API_ROUTES.HEALTH_CHECK, (_, res) => {
+router.get(END_PONITS.HEALTH_CHECK, (_, res) => {
   sendResponse(res, {
     type: 'success',
     statusCode: 200,

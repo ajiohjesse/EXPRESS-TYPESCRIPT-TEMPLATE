@@ -10,23 +10,20 @@ interface RateLimiterRes {
 }
 
 const generalLimiter = new RateLimiterMemory({
-  points: 100,
+  points: 1800, //fillrate 30/sec
   duration: 60,
-  blockDuration: 60 * 2,
   keyPrefix: 'general',
 });
 
 const authLimiter = new RateLimiterMemory({
-  points: 20,
+  points: 20, //fillrate 4/min
   duration: 60 * 5,
-  blockDuration: 60 * 15,
   keyPrefix: 'auth',
 });
 
 const emailLimiter = new RateLimiterMemory({
-  points: 3,
-  duration: 60 * 30,
-  blockDuration: 60 * 15,
+  points: 3, //fillrate 3/hr
+  duration: 60 * 60,
   keyPrefix: 'email',
 });
 
@@ -59,9 +56,16 @@ async function consumeLimiter(
   res: Response,
   next: NextFunction
 ) {
+  const isEmailLimiter = limiter === emailLimiter;
+
+  const consumeKey =
+    isEmailLimiter && req.body.email ? req.body.email : getClientIp(req);
+
   return limiter
-    .consume(getClientIp(req))
-    .then(() => {
+    .consume(consumeKey)
+    .then(limiterRes => {
+      res.set('X-RateLimit-Limit', limiter.points.toString());
+      res.set('X-RateLimit-Remaining', limiterRes.remainingPoints.toString());
       next();
     })
     .catch((error: RateLimiterRes) => {

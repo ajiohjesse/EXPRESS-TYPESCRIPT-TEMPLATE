@@ -1,15 +1,23 @@
-export const API_ROUTES = {
+export const END_PONITS = {
   HEALTH_CHECK: '/health-check',
-  SSE: '/sse',
-  POST: {
-    CREATE: '/posts',
-    GET: '/posts/:id',
+
+  DOCS: {
+    UI: '/docs',
+    JSON: '/docs.json',
   },
-  LOGS: {
-    GET_LOGS: '/logs',
-    GET_LOG_FILE: '/logs/:filename',
+
+  LOGS: '/logs',
+
+  SSE: {
+    BASE: '/v1/sse',
   },
+
+  POSTS: {
+    BASE: '/v1/posts',
+  },
+
   AUTH: {
+    BASE: '/v1/auth',
     LOGIN: '/login',
     REGISTER: '/register',
     LOGOUT: '/logout',

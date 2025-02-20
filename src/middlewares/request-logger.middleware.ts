@@ -1,4 +1,4 @@
-import { API_ROUTES } from '@/app/constants';
+import { END_PONITS } from '@/app/endpoints';
 import { env } from '@/helpers/env';
 import logger from '@/helpers/logger';
 import morgan from 'morgan';
@@ -17,7 +17,7 @@ const requestLogger = morgan(
     : ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"', // More detailed logging for production
   {
     stream,
-    skip: req => req.url === API_ROUTES.HEALTH_CHECK, // Skip logging health check requests
+    skip: req => req.url === END_PONITS.HEALTH_CHECK, // Skip logging health check requests
   }
 );
 
