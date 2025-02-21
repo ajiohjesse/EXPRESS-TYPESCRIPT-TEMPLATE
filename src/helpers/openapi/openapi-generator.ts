@@ -1,14 +1,9 @@
 import { appConfig } from '@/app/config';
 import { END_PONITS } from '@/app/endpoints';
 import {
-  extendZodWithOpenApi,
   OpenApiGeneratorV3,
   OpenAPIRegistry,
 } from '@asteasolutions/zod-to-openapi';
-import { z } from 'zod';
-
-//adds the openapi methods to zod schemas
-extendZodWithOpenApi(z);
 
 export function generateOpenApiDocument(registries: OpenAPIRegistry[]) {
   const mainRegistry = new OpenAPIRegistry(registries);

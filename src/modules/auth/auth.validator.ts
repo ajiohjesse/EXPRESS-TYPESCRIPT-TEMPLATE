@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '@/helpers/openapi/zod-extend';
 
 export const loginRequestSchema = z.object({
   email: z.string().email(),

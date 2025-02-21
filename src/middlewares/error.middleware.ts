@@ -1,8 +1,8 @@
 import { PublicError } from '@/helpers/errors/public-error';
 import logger from '@/helpers/logger';
+import { z } from '@/helpers/openapi/zod-extend';
 import { sendResponse } from '@/helpers/response';
 import type { ErrorRequestHandler } from 'express';
-import { z } from 'zod';
 
 const errorDataSchema = z
   .record(z.string(), z.unknown())

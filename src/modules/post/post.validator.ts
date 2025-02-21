@@ -1,8 +1,4 @@
-import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
-import { z } from 'zod';
-
-//adds the openapi methods to zod schemas
-extendZodWithOpenApi(z);
+import { z } from '@/helpers/openapi/zod-extend';
 
 export const createPostSchema = z
   .object({

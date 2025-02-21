@@ -21,6 +21,9 @@
     "format": "prettier --write .",
     "check": "pnpm lint && pnpm format:check"
   },
+  "sideEffects": [
+    "./src/helpers/openapi/zod-extend.ts"
+  ],
   "keywords": [
     "express",
     "typescript",

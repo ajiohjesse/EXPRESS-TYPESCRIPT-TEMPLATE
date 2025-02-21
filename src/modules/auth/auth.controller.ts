@@ -1,8 +1,8 @@
 import { authenticationError } from '@/helpers/errors';
 import logger from '@/helpers/logger';
+import { z } from '@/helpers/openapi/zod-extend';
 import requestValidator from '@/helpers/request-validator';
 import type { RequestHandler } from 'express';
-import { z } from 'zod';
 import { sendResponse } from './../../helpers/response';
 import authService from './auth.service';
 import { loginResponseSchema } from './auth.validator';

@@ -1,6 +1,6 @@
+import { z } from '@/helpers/openapi/zod-extend';
 import { type ResponseConfig } from '@asteasolutions/zod-to-openapi';
 import { StatusCodes } from 'http-status-codes';
-import { z } from 'zod';
 
 // based off of the the standard api response object
 type OpenAPIResponseType = {

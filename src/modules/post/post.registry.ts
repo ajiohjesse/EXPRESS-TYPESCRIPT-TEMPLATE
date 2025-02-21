@@ -1,8 +1,8 @@
 import { END_PONITS } from '@/app/endpoints';
 import { generateOpenApiResponses } from '@/helpers/openapi/openapi.helpers';
+import { z } from '@/helpers/openapi/zod-extend';
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import { StatusCodes } from 'http-status-codes';
-import { z } from 'zod';
 import { getPostSchema } from './post.validator';
 
 const r = new OpenAPIRegistry();

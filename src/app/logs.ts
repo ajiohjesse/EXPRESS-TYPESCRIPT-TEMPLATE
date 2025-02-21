@@ -2,11 +2,11 @@ import { END_PONITS } from '@/app/endpoints';
 import { env } from '@/helpers/env';
 import { forbiddenError } from '@/helpers/errors';
 import { getLogFiles } from '@/helpers/logger';
+import { z } from '@/helpers/openapi/zod-extend';
 import { sendResponse } from '@/helpers/response';
 import { Router, type RequestHandler } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { z } from 'zod';
 
 const router = Router();
 export { router as logsRoute };
