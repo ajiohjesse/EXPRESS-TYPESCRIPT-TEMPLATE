@@ -3,10 +3,8 @@ import winston from 'winston';
 import 'winston-daily-rotate-file';
 import { env } from './env';
 
-// Define log directory
 const logDir = 'logs';
 
-// Define log formats
 const formats = {
   console: winston.format.combine(
     winston.format.colorize(),
@@ -24,7 +22,6 @@ const formats = {
   ),
 };
 
-// Create rotating file transport for error logs
 const errorFileRotateTransport = new winston.transports.DailyRotateFile({
   filename: path.join(logDir, 'error-%DATE%.log'),
   datePattern: 'YYYY-MM-DD',
@@ -33,7 +30,6 @@ const errorFileRotateTransport = new winston.transports.DailyRotateFile({
   format: formats.file,
 });
 
-// Create rotating file transport for combined logs
 const combinedFileRotateTransport = new winston.transports.DailyRotateFile({
   filename: path.join(logDir, 'combined-%DATE%.log'),
   datePattern: 'YYYY-MM-DD',
@@ -41,7 +37,6 @@ const combinedFileRotateTransport = new winston.transports.DailyRotateFile({
   format: formats.file,
 });
 
-// Create logger instance
 const logger = winston.createLogger({
   level: env.isDev ? 'debug' : 'info',
   transports: [
@@ -53,7 +48,6 @@ const logger = winston.createLogger({
   ],
 });
 
-// Export a function to get all log files
 export const getLogFiles = async (): Promise<string[]> => {
   const files = await import('fs/promises');
   const allFiles = await files.readdir(logDir);

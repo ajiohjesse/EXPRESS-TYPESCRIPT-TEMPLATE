@@ -32,12 +32,10 @@ export const rateLimiterMiddleware: RequestHandler = async (req, res, next) => {
   await consumeLimiter(generalLimiter, req, res, next);
 };
 
-// Auth rate limiting middleware
 export const authRateLimiter: RequestHandler = async (req, res, next) => {
   await consumeLimiter(authLimiter, req, res, next);
 };
 
-// Email rate limiting middleware
 export const emailRateLimiter: RequestHandler = async (req, res, next) => {
   await consumeLimiter(emailLimiter, req, res, next);
 };

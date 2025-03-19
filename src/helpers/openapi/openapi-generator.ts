@@ -1,5 +1,5 @@
-import { appConfig } from '@/app/config';
-import { END_PONITS } from '@/app/endpoints';
+import { APP_CONFIG } from '@/constants/app-config';
+import { END_PONITS } from '@/constants/endpoints';
 import {
   OpenApiGeneratorV3,
   OpenAPIRegistry,
@@ -17,7 +17,7 @@ export function generateOpenApiDocument(registries: OpenAPIRegistry[]) {
   mainRegistry.registerComponent('securitySchemes', 'cookieAuth', {
     type: 'apiKey',
     in: 'cookie',
-    name: appConfig.refreshCookieName,
+    name: APP_CONFIG.refreshCookieName,
   });
 
   const generator = new OpenApiGeneratorV3(mainRegistry.definitions);
@@ -25,9 +25,9 @@ export function generateOpenApiDocument(registries: OpenAPIRegistry[]) {
   return generator.generateDocument({
     openapi: '3.0.0',
     info: {
-      version: appConfig.version,
-      title: appConfig.name,
-      description: appConfig.description,
+      version: APP_CONFIG.version,
+      title: APP_CONFIG.name,
+      description: APP_CONFIG.description,
     },
     externalDocs: {
       description: 'View the raw OpenAPI spec in JSON format',

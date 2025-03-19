@@ -1,6 +1,6 @@
-import { END_PONITS } from '@/app/endpoints';
+import { END_PONITS } from '@/constants/endpoints';
 import { env } from '@/helpers/env';
-import { forbiddenError } from '@/helpers/errors';
+import { forbiddenError } from '@/helpers/error';
 import { getLogFiles } from '@/helpers/logger';
 import { z } from '@/helpers/openapi/zod-extend';
 import { sendResponse } from '@/helpers/response';

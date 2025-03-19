@@ -14,12 +14,17 @@ export const env = cleanEnv(process.env, {
 export function getEnvFile() {
   switch (process.env.NODE_ENV) {
     case 'production':
-      return '.env.production.local';
+      return '.env.production';
     case 'staging':
-      return '.env.staging.local';
+      return '.env.staging';
     case 'test':
       return '.env.test';
     default:
+      /**
+       * NOTE: Prefer .env.local over .env.
+       * Using .env will cause drizzle config to load the variables
+       * automatically from .env, bypassing our custom dotenv config.
+       */
       return '.env.local';
   }
 }

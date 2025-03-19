@@ -5,5 +5,6 @@ import postController from './post.controller';
 const router = Router();
 export { router as postRoute };
 
-router.get('/:id', postController.getPost);
 router.post('/', authMiddleware, postController.createPost);
+router.get('/', postController.getAllPosts);
+router.get('/:id', postController.getPost);

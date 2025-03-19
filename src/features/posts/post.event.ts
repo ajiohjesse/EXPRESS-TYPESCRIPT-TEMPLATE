@@ -1,8 +1,8 @@
 import { createChannel } from 'better-sse';
-import type { GetPostDTO } from './post.validator';
+import type { PostDTO } from './post.validator';
 
 export const postEventChannel = createChannel();
 
-export const broadcastNewPost = (post: GetPostDTO) => {
+export const broadcastNewPost = (post: PostDTO) => {
   postEventChannel.broadcast(post, 'new-post');
 };

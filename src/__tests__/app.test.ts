@@ -1,6 +1,6 @@
+import app from '@/app';
 import request from 'supertest';
 import { describe, it } from 'vitest';
-import app from './index';
 
 describe('GET /health-check', () => {
   it('should return 200', () => {

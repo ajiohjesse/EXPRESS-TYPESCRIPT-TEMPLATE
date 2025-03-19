@@ -1,16 +1,16 @@
 export const END_PONITS = {
   HEALTH_CHECK: '/health-check',
 
+  SSE: {
+    BASE: '/sse',
+  },
+
   DOCS: {
     UI: '/docs',
     JSON: '/docs.json',
   },
 
   LOGS: '/logs',
-
-  SSE: {
-    BASE: '/v1/sse',
-  },
 
   POSTS: {
     BASE: '/v1/posts',

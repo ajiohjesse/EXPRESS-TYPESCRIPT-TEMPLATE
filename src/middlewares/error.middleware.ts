@@ -1,4 +1,4 @@
-import { PublicError } from '@/helpers/errors/public-error';
+import { PublicError } from '@/helpers/error';
 import logger from '@/helpers/logger';
 import { z } from '@/helpers/openapi/zod-extend';
 import { sendResponse } from '@/helpers/response';
@@ -23,7 +23,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
       name: err.name,
       message: err.message,
       stack: stackLines,
-      ...(err instanceof Error ? err : {}), // Include any additional properties if available
+      ...(err instanceof Error ? err : {}),
     };
 
     logger.error({

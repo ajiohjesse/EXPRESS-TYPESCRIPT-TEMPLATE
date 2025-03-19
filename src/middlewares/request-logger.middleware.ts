@@ -1,8 +1,7 @@
-import { END_PONITS } from '@/app/endpoints';
+import { END_PONITS } from '@/constants/endpoints';
 import logger from '@/helpers/logger';
 import morgan from 'morgan';
 
-// Create a write stream for Morgan
 const stream = {
   write: (message: string) => {
     logger.info(message.trim());

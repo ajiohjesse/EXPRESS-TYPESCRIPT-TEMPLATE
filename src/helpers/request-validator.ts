@@ -1,6 +1,6 @@
 import type { Request } from 'express';
 import type { z } from 'zod';
-import { PublicError } from './errors/public-error';
+import { PublicError } from './error';
 
 interface FieldError {
   path: string[];

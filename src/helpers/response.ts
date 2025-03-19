@@ -1,6 +1,6 @@
 import type { Response } from 'express';
 import type { infer as ZodInfer, ZodSchema } from 'zod';
-import type { AppResponseData } from '../app/types';
+import type { AppResponseData } from '../types';
 
 type SendResponseWithSchema<T extends ZodSchema> = {
   type: 'success' | 'error';
@@ -45,7 +45,6 @@ type PaginatedResponseProps<T extends ZodSchema | undefined = undefined> =
             page: number;
             limit: number;
             totalItems: number;
-            totalPages: number;
           };
         };
       }

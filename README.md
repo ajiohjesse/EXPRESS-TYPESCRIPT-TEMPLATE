@@ -6,54 +6,45 @@ A modern Express.js template with TypeScript, featuring:
 - 📦 [Drizzle ORM](https://orm.drizzle.team/) for PostgreSQL
 - 🔒 Built-in security with [Helmet](https://helmetjs.github.io/)
 - ✨ [Prettier](https://prettier.io/) for code formatting
+- 🚦 [Eslint](https://https://eslint.org/) for code linting
 - 🧪 [Vitest](https://vitest.dev/) for testing
 - 🔄 Server-Sent Events support with [better-sse](https://github.com/MatthewWid/better-sse)
 - ✅ Request validation with [Zod](https://zod.dev/)
+- 🏗 [Esbuild](https://esbuild.github.io/) for bundling
+- 🧾 Api documentation with [Zod-to-openapi](https://www.npmjs.com/package/@asteasolutions/zod-to-openapi) and Swagger UI.
 
 ## Prerequisites
 
 - Node.js
 - PostgreSQL
-- Bun (for development)
 
 ## Getting Started
 
 1. Clone the repository
-2. Copy `.env.example` to `.env` and configure your environment variables
+2. Copy `.env.example` to `.env.local` and configure your environment variables
 3. Install dependencies:
    ```bash
    npm install
    ```
-
-## Available Scripts
-
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run test` - Run tests
-- `npm run test:coverage` - Run tests with coverage
-- `npm run format` - Format code with Prettier
-- `npm run db:push` - Push database schema changes
-- `npm run db:studio` - Open Drizzle Studio
+4. Push drizzle database schema;
+   ```bash
+   npm run db:push
+   ```
+5. Start development server;
+   ```bash
+   npm run dev
+   ```
+6. Visit localhost:8000/docs to view api docs.
+7. Create and query posts from api docs.
 
 ## Database
 
-This template uses Drizzle ORM with PostgreSQL. Configure your database connection in the `.env` file.
+This template uses Drizzle ORM with PostgreSQL. Configure your database connection in the `.env.local` file.
 
-## Project Structure
+## Licence
 
-```
-src/
-├── app/           # Express app setup
-├── database/      # Database configuration and schemas
-├── events/        # SSE channels and event emitters
-├── helpers/       # Utility functions
-├── jobs/          # Background jobs and queues
-├── libs/          # External library integrations
-├── middlewares/   # Express middlewares
-└── modules/       # Feature modules (auth, etc.)
-```
+MIT
 
-## License
+## Created By
 
-ISC
+[Jesse Ajioh](https://github.com/ajiohjesse)
