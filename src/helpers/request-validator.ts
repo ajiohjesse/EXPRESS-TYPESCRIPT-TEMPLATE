@@ -21,9 +21,9 @@ class ValidationErrorData {
 }
 
 export type RequestValidatorOptions<
-  TBody extends z.ZodSchema,
-  TQuery extends z.ZodSchema,
-  TParams extends z.ZodSchema,
+  TBody extends z.ZodObject<z.ZodRawShape> = never,
+  TQuery extends z.ZodObject<z.ZodRawShape> = never,
+  TParams extends z.ZodObject<z.ZodRawShape> = never,
 > = {
   body?: TBody;
   query?: TQuery;
@@ -31,21 +31,21 @@ export type RequestValidatorOptions<
 } & ({ body: TBody } | { query: TQuery } | { params: TParams });
 
 /**
- * A class that validates request objects.
- * It can validate body, query, and path parameters.
- * @class RequestValidator
- * @throws If validation fails on any of the methods, it throws an intance of PublicError.
- *
- * @method validate validate body, query and path parameters at once.
- * @method validateBody validates the request body.
- * @method validatePath validates the path parameters.
- * @method validateQuery validates the query parameters
+ * Class for validating Express request objects (body, query, and path parameters) using Zod schemas.
+ * Throws a `PublicError` when validation fails.
  */
 export class RequestValidator {
+  /**
+   * Validates request body, query, and path parameters simultaneously.
+   * @param request - Express request object.
+   * @param options - Object containing Zod schemas for validation.
+   * @returns Validated data for body, query, and params.
+   * @throws {PublicError} If validation fails for any field.
+   */
   validate<
-    TBody extends z.ZodSchema,
-    TQuery extends z.ZodSchema,
-    TParams extends z.ZodSchema,
+    TBody extends z.ZodObject<z.ZodRawShape>,
+    TQuery extends z.ZodObject<z.ZodRawShape>,
+    TParams extends z.ZodObject<z.ZodRawShape>,
   >(
     request: Request,
     options: RequestValidatorOptions<TBody, TQuery, TParams>
@@ -55,7 +55,9 @@ export class RequestValidator {
     params: z.infer<TParams>;
   } {
     const errors: ValidationErrorData[] = [];
-    let validatedBody, validatedQuery, validatedParams;
+    let validatedBody: z.infer<TBody> = {};
+    let validatedQuery: z.infer<TQuery> = {};
+    let validatedParams: z.infer<TParams> = {};
 
     if (options.body) {
       const parsedBody = options.body.safeParse(request.body);
@@ -96,69 +98,97 @@ export class RequestValidator {
   }
 
   /**
-   * Validates a body object against a Zod schema.
-   * @param body - The request body object.
-   * @param schema - The Zod schema to validate against.
-   * @returns The validated and parsed query object.
-   * @throws If validation fails, it throws a PublicError.
+   * Validates request body against a Zod schema.
+   * @param body - Request body object.
+   * @param schema - Zod schema for validation.
+   * @returns Parsed and validated body data.
+   * @throws {PublicError} If validation fails.
    */
-  validateBody<T extends z.ZodSchema>(
+  validateBody<T extends z.ZodObject<z.ZodRawShape>>(
     body: Request['body'],
     schema: T
   ): z.infer<T> {
     const parsedBody = schema.safeParse(body);
-
     if (!parsedBody.success) {
       throw new PublicError(400, 'Invalid request body', {
         errors: [new ValidationErrorData('body', parsedBody.error)],
       });
     }
-
     return parsedBody.data;
   }
 
   /**
-   * Validates a query object against a Zod schema.
-   * @param query - The request query object.
-   * @param schema - The Zod schema to validate against.
-   * @returns The validated and parsed query object.
-   * @throws If validation fails, it throws a PublicError.
+   * Validates query parameters against a Zod schema.
+   * If the schema has optional fields with defaults, they are returned instead of throwing an error.
+   * @param query - Request query object.
+   * @param schema - Zod schema for validation.
+   * @returns Parsed query object or default values.
+   * @throws {PublicError} If required fields fail validation.
    */
-  validateQuery<T extends z.ZodSchema>(
+  validateQuery<T extends z.ZodObject<z.ZodRawShape>>(
     query: Request['query'],
     schema: T
   ): z.infer<T> {
     const parsedQuery = schema.safeParse(query);
+    if (parsedQuery.success) {
+      return parsedQuery.data;
+    }
 
-    if (!parsedQuery.success) {
-      throw new PublicError(400, 'Invalid request query', {
+    const requiredErrors = parsedQuery.error.errors.filter(err => {
+      return err.path.every(path => !schema.shape[path].isOptional());
+    });
+
+    if (requiredErrors.length > 0) {
+      throw new PublicError(400, 'Invalid request query parameters', {
         errors: [new ValidationErrorData('query', parsedQuery.error)],
       });
     }
 
-    return parsedQuery.data;
+    return this._getZodSchemaDefaultValues(schema);
   }
 
   /**
    * Validates path parameters against a Zod schema.
-   * @param params - The request path parameters object.
-   * @param schema - The Zod schema to validate against.
-   * @returns The validated and parsed path parameters object.
-   * @throws If validation fails, it throws an error.
+   * @param params - Request path parameters.
+   * @param schema - Zod schema for validation.
+   * @returns Parsed and validated path parameters.
+   * @throws {PublicError} If validation fails.
    */
-  validateParams<T extends z.ZodSchema>(
+  validateParams<T extends z.ZodObject<z.ZodRawShape>>(
     params: Request['params'],
     schema: T
   ): z.infer<T> {
     const parsedParams = schema.safeParse(params);
-
     if (!parsedParams.success) {
       throw new PublicError(400, 'Invalid request path parameters', {
         errors: [new ValidationErrorData('params', parsedParams.error)],
       });
     }
-
     return parsedParams.data;
+  }
+
+  /**
+   * Extracts default values from a Zod schema.
+   * @param schema - Zod object schema.
+   * @returns Object containing default values.
+   */
+  private _getZodSchemaDefaultValues<T extends z.ZodObject<z.ZodRawShape>>(
+    schema: T
+  ): Partial<z.infer<T>> {
+    const shape = schema.shape;
+    const defaults: Record<string, unknown> = {};
+
+    for (const key in shape) {
+      const def = shape[key]._def;
+      if (def.defaultValue !== undefined) {
+        defaults[key] =
+          typeof def.defaultValue === 'function'
+            ? def.defaultValue()
+            : def.defaultValue;
+      }
+    }
+
+    return defaults;
   }
 }
 

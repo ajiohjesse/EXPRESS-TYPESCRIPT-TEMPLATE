@@ -10,7 +10,7 @@ type OpenAPIResponseType = {
   success: boolean;
 };
 
-// the responses are documented for ever endpoint
+// the responses are documented for every endpoint
 const genericApiResponses: Record<number, ResponseConfig> = {
   [StatusCodes.TOO_MANY_REQUESTS]: {
     description: 'Too many requests, please try again later',
@@ -105,8 +105,5 @@ export const getPaginatedResponseSchema = <T extends z.ZodType = z.ZodNull>(
       totalItems: z
         .number()
         .openapi({ example: 100, description: 'The total number of items' }),
-      totalPages: z
-        .number()
-        .openapi({ example: 10, description: 'The total number of pages' }),
     }),
   });
