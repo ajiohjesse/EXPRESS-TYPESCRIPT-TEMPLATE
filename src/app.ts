@@ -11,7 +11,7 @@ import { END_PONITS } from './constants/endpoints';
 import { docsRoute } from './features/api-docs/docs.route';
 import { logsRoute } from './features/server-logs/logs.route';
 import { sendResponse } from './helpers/response';
-import { apiRoutes } from './routes';
+import router from './routes';
 
 const app = express();
 
@@ -57,7 +57,7 @@ app.use(logsRoute);
 app.use(requestLogger);
 app.use(rateLimiterMiddleware);
 
-app.use(apiRoutes);
+app.use(router);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
