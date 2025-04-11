@@ -5,7 +5,6 @@ import requestLogger from '@/middlewares/request-logger.middleware';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { type Response } from 'express';
-// import 'express-async-errors';
 import helmet from 'helmet';
 import { END_PONITS } from './constants/endpoints';
 import { docsRoute } from './features/api-docs/docs.route';
