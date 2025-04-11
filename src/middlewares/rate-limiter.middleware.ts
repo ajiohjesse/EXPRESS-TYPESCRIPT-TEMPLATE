@@ -1,5 +1,6 @@
 import { sendResponse } from '@/helpers/response';
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 
 interface RateLimiterRes {
@@ -68,24 +69,23 @@ async function consumeLimiter(
     })
     .catch((error: RateLimiterRes) => {
       const headers = {
-        'Retry-After': Number(error.msBeforeNext) / 1000,
-        'X-RateLimit-Limit': generalLimiter.points,
-        'X-RateLimit-Remaining': error.remainingPoints,
-        'X-RateLimit-Reset': new Date(Date.now() + error.msBeforeNext),
+        'Retry-After': String(Number(error.msBeforeNext) / 1000),
+        'X-RateLimit-Limit': generalLimiter.points.toString(),
+        'X-RateLimit-Remaining': error.remainingPoints.toString(),
+        'X-RateLimit-Reset': new Date(
+          Date.now() + error.msBeforeNext
+        ).toISOString(),
       };
 
-      res.set('Retry-After', headers['Retry-After'].toString());
-      res.set('X-RateLimit-Limit', headers['X-RateLimit-Limit'].toString());
-      res.set(
-        'X-RateLimit-Remaining',
-        headers['X-RateLimit-Remaining'].toString()
-      );
-      res.set('X-RateLimit-Reset', headers['X-RateLimit-Reset'].toString());
+      res.set('Retry-After', headers['Retry-After']);
+      res.set('X-RateLimit-Limit', headers['X-RateLimit-Limit']);
+      res.set('X-RateLimit-Remaining', headers['X-RateLimit-Remaining']);
+      res.set('X-RateLimit-Reset', headers['X-RateLimit-Reset']);
 
       sendResponse(res, {
         type: 'error',
         message: 'Too many requests',
-        statusCode: 429,
+        statusCode: StatusCodes.TOO_MANY_REQUESTS,
         data: null,
       });
     });

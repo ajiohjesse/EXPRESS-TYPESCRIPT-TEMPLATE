@@ -4,8 +4,8 @@ import { rateLimiterMiddleware } from '@/middlewares/rate-limiter.middleware';
 import requestLogger from '@/middlewares/request-logger.middleware';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express from 'express';
-import 'express-async-errors';
+import express, { type Response } from 'express';
+// import 'express-async-errors';
 import helmet from 'helmet';
 import { END_PONITS } from './constants/endpoints';
 import { docsRoute } from './features/api-docs/docs.route';
@@ -33,23 +33,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(helmet());
 app.use(cookieParser());
 
-app.get('/', (_, res) => {
-  sendResponse(res, {
-    type: 'success',
-    statusCode: 200,
-    message: 'Server is running',
-    data: null,
-  });
-});
-
-app.get(END_PONITS.HEALTH_CHECK, (_, res) => {
-  sendResponse(res, {
-    type: 'success',
-    statusCode: 200,
-    message: 'Server is running',
-    data: null,
-  });
-});
+app.get('/', (_, res) => sendHealthCheckResponse(res));
+app.get(END_PONITS.HEALTH_CHECK, (_, res) => sendHealthCheckResponse(res));
 
 app.use(docsRoute);
 app.use(logsRoute);
@@ -61,5 +46,14 @@ app.use(router);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
+
+function sendHealthCheckResponse(res: Response) {
+  return sendResponse(res, {
+    type: 'success',
+    statusCode: 200,
+    message: 'Server is running',
+    data: null,
+  });
+}
 
 export default app;
