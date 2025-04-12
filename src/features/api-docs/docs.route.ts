@@ -1,8 +1,8 @@
-import { END_PONITS } from '@/constants/endpoints';
-import { generateOpenApiDocument } from '@/helpers/openapi/openapi-generator';
-import { Router } from 'express';
-import swaggerUi from 'swagger-ui-express';
-import apiDocsRegistry from './docs.registry';
+import { END_PONITS } from "@/constants/endpoints";
+import { generateOpenApiDocument } from "@/helpers/openapi/openapi-generator";
+import { Router } from "express";
+import swaggerUi from "swagger-ui-express";
+import apiDocsRegistry from "./docs.registry";
 
 const router = Router();
 export { router as docsRoute };

@@ -1,4 +1,4 @@
-import { z } from '@/helpers/openapi/zod-extend';
+import { z } from "@/helpers/openapi/zod-extend";
 
 export const postParamSchema = z
   .object({
@@ -6,7 +6,7 @@ export const postParamSchema = z
   })
   .openapi({
     param: {
-      description: 'The id of the post',
+      description: "The id of the post",
     },
   });
 
@@ -20,10 +20,10 @@ export type PostQueryDTO = z.infer<typeof postQuerySchema>;
 
 export const createPostSchema = z
   .object({
-    title: z.string().min(1).openapi({ example: 'This is a sample post' }),
-    content: z.string().min(1).openapi({ example: 'Some sample post content' }),
+    title: z.string().min(1).openapi({ example: "This is a sample post" }),
+    content: z.string().min(1).openapi({ example: "Some sample post content" }),
   })
-  .openapi('CreatePost');
+  .openapi("CreatePost");
 
 export type CreatePostDTO = z.infer<typeof createPostSchema>;
 
@@ -35,6 +35,6 @@ export const postSchema = z
     createdAt: z.date(),
     updatedAt: z.date(),
   })
-  .openapi('Post');
+  .openapi("Post");
 
 export type PostDTO = z.infer<typeof postSchema>;

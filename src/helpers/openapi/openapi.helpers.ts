@@ -1,6 +1,6 @@
-import { z } from '@/helpers/openapi/zod-extend';
-import { type ResponseConfig } from '@asteasolutions/zod-to-openapi';
-import { StatusCodes } from 'http-status-codes';
+import { z } from "@/helpers/openapi/zod-extend";
+import { type ResponseConfig } from "@asteasolutions/zod-to-openapi";
+import { StatusCodes } from "http-status-codes";
 
 // based off of the the standard api response object
 type OpenAPIResponseType = {
@@ -13,9 +13,9 @@ type OpenAPIResponseType = {
 // the responses are documented for every endpoint
 const genericApiResponses: Record<number, ResponseConfig> = {
   [StatusCodes.TOO_MANY_REQUESTS]: {
-    description: 'Too many requests, please try again later',
+    description: "Too many requests, please try again later",
     content: {
-      'application/json': {
+      "application/json": {
         schema: z.object({
           statusCode: z
             .number()
@@ -23,23 +23,23 @@ const genericApiResponses: Record<number, ResponseConfig> = {
           success: z.boolean().openapi({ example: false }),
           message: z
             .string()
-            .openapi({ example: 'Too many requests, please try again later' }),
-          data: z.null().openapi({ example: null, type: 'null' }),
+            .openapi({ example: "Too many requests, please try again later" }),
+          data: z.null().openapi({ example: null, type: "null" }),
         }),
       },
     },
   },
   [StatusCodes.INTERNAL_SERVER_ERROR]: {
-    description: 'Internal server error',
+    description: "Internal server error",
     content: {
-      'application/json': {
+      "application/json": {
         schema: z.object({
           statusCode: z
             .number()
             .openapi({ example: StatusCodes.INTERNAL_SERVER_ERROR }),
           success: z.boolean().openapi({ example: false }),
-          message: z.string().openapi({ example: 'Unable to process request' }),
-          data: z.null().openapi({ example: null, type: 'null' }),
+          message: z.string().openapi({ example: "Unable to process request" }),
+          data: z.null().openapi({ example: null, type: "null" }),
         }),
       },
     },
@@ -56,7 +56,7 @@ export function generateOpenApiResponses(configs: OpenAPIResponseType[]) {
     responses[statusCode] = {
       description,
       content: {
-        'application/json': {
+        "application/json": {
           schema: z.object({
             statusCode: z.number().openapi({ example: statusCode }),
             success: z.boolean().openapi({ example: success }),
@@ -72,21 +72,21 @@ export function generateOpenApiResponses(configs: OpenAPIResponseType[]) {
 
 export const openApiNotFoundResponse: OpenAPIResponseType = {
   schema: z.null(),
-  description: 'Resource not found',
+  description: "Resource not found",
   statusCode: StatusCodes.NOT_FOUND,
   success: false,
 };
 
 export const openApiUnauthenticatedResponse: OpenAPIResponseType = {
   schema: z.null(),
-  description: 'Unauthenticated Request',
+  description: "Unauthenticated Request",
   statusCode: StatusCodes.UNAUTHORIZED,
   success: false,
 };
 
 export const openApiForbiddenResponse: OpenAPIResponseType = {
   schema: z.null(),
-  description: 'You are not authorized to access this resource',
+  description: "You are not authorized to access this resource",
   statusCode: StatusCodes.FORBIDDEN,
   success: false,
 };
@@ -98,12 +98,12 @@ export const getPaginatedResponseSchema = <T extends z.ZodType = z.ZodNull>(
   z.object({
     items: z.array(dataSchema),
     meta: z.object({
-      page: z.number().openapi({ example: 1, description: 'The current page' }),
+      page: z.number().openapi({ example: 1, description: "The current page" }),
       limit: z
         .number()
-        .openapi({ example: 10, description: 'The number of items per page' }),
+        .openapi({ example: 10, description: "The number of items per page" }),
       totalItems: z
         .number()
-        .openapi({ example: 100, description: 'The total number of items' }),
+        .openapi({ example: 100, description: "The total number of items" }),
     }),
   });

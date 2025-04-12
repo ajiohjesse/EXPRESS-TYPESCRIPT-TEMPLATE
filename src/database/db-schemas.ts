@@ -1,7 +1,7 @@
-import { index, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
+import { index, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 export const postTable = pgTable(
-  'posts',
+  "posts",
   {
     id: serial().primaryKey(),
     title: text().notNull(),

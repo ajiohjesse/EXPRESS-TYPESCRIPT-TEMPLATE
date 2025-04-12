@@ -1,6 +1,6 @@
-import { END_PONITS } from '@/constants/endpoints';
-import logger from '@/helpers/logger';
-import morgan from 'morgan';
+import { END_PONITS } from "@/constants/endpoints";
+import logger from "@/helpers/logger";
+import morgan from "morgan";
 
 const stream = {
   write: (message: string) => {
@@ -8,7 +8,7 @@ const stream = {
   },
 };
 
-const requestLogger = morgan('combined', {
+const requestLogger = morgan("combined", {
   stream,
   skip: req => req.url === END_PONITS.HEALTH_CHECK,
 });

@@ -1,16 +1,16 @@
-import type { Response } from 'express';
-import type { infer as ZodInfer, ZodSchema } from 'zod';
-import type { AppResponseData } from '../types';
+import type { Response } from "express";
+import type { infer as ZodInfer, ZodSchema } from "zod";
+import type { AppResponseData } from "../types";
 
 type SendResponseWithSchema<T extends ZodSchema> = {
-  type: 'success' | 'error';
+  type: "success" | "error";
   statusCode: number;
   message: string;
   data: ZodInfer<T>;
 };
 
 type SendResponseWithoutSchema = {
-  type: 'success' | 'error';
+  type: "success" | "error";
   statusCode: number;
   message: string;
   data: null;
@@ -26,7 +26,7 @@ export const sendResponse = <T extends ZodSchema | undefined = undefined>(
   const { type, message, statusCode, data } = props;
 
   const responseData: AppResponseData<typeof data> = {
-    success: type === 'success',
+    success: type === "success",
     message,
     data: data,
   };

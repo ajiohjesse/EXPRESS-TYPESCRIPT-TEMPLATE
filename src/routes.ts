@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { END_PONITS } from './constants/endpoints';
-import { postRoute } from './features/posts/post.route';
-import { sseRoute } from './features/sse/sse.route';
+import { Router } from "express";
+import { END_PONITS } from "./constants/endpoints";
+import { postRoute } from "./features/posts/post.route";
+import { sseRoute } from "./features/sse/sse.route";
 
 export const router = Router();
 

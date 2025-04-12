@@ -1,42 +1,42 @@
-import { END_PONITS } from '@/constants/endpoints';
+import { END_PONITS } from "@/constants/endpoints";
 import {
   generateOpenApiResponses,
   getPaginatedResponseSchema,
   openApiNotFoundResponse,
   openApiUnauthenticatedResponse,
-} from '@/helpers/openapi/openapi.helpers';
-import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
-import { StatusCodes } from 'http-status-codes';
+} from "@/helpers/openapi/openapi.helpers";
+import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
+import { StatusCodes } from "http-status-codes";
 import {
   createPostSchema,
   postParamSchema,
   postQuerySchema,
   postSchema,
-} from './post.validator';
+} from "./post.validator";
 
 const r = new OpenAPIRegistry();
 export { r as postRegistry };
 
 r.registerPath({
   path: `${END_PONITS.POSTS.BASE}`,
-  method: 'post',
-  description: 'Create a new post',
-  operationId: 'createPost',
+  method: "post",
+  description: "Create a new post",
+  operationId: "createPost",
   request: {
     body: {
       content: {
-        'application/json': {
+        "application/json": {
           schema: createPostSchema,
         },
       },
     },
   },
-  tags: ['Posts'],
+  tags: ["Posts"],
   responses: generateOpenApiResponses([
     {
       success: true,
       statusCode: StatusCodes.OK,
-      description: 'Posts created successfully',
+      description: "Posts created successfully",
       schema: postSchema,
     },
     openApiUnauthenticatedResponse,
@@ -45,18 +45,18 @@ r.registerPath({
 
 r.registerPath({
   path: `${END_PONITS.POSTS.BASE}`,
-  method: 'get',
-  description: 'Get all posts',
-  operationId: 'getAllPost',
+  method: "get",
+  description: "Get all posts",
+  operationId: "getAllPost",
   request: {
     query: postQuerySchema,
   },
-  tags: ['Posts'],
+  tags: ["Posts"],
   responses: generateOpenApiResponses([
     {
       success: true,
       statusCode: StatusCodes.OK,
-      description: 'Posts fetched successfully',
+      description: "Posts fetched successfully",
       schema: getPaginatedResponseSchema(postSchema),
     },
     openApiNotFoundResponse,
@@ -65,18 +65,18 @@ r.registerPath({
 
 r.registerPath({
   path: `${END_PONITS.POSTS.BASE}/{id}`,
-  method: 'get',
-  description: 'Get single post by id',
-  operationId: 'getPost',
+  method: "get",
+  description: "Get single post by id",
+  operationId: "getPost",
   request: {
     params: postParamSchema,
   },
-  tags: ['Posts'],
+  tags: ["Posts"],
   responses: generateOpenApiResponses([
     {
       success: true,
       statusCode: StatusCodes.OK,
-      description: 'Posts fetched successfully',
+      description: "Posts fetched successfully",
       schema: postSchema,
     },
     openApiNotFoundResponse,

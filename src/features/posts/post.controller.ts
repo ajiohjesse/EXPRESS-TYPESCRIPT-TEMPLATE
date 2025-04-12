@@ -1,15 +1,15 @@
-import { authenticationError, notFoundError } from '@/helpers/error';
-import requestValidator from '@/helpers/request-validator';
-import { sendPaginatedResponse, sendResponse } from '@/helpers/response';
-import type { RequestHandler } from 'express';
-import { broadcastNewPost } from './post.event';
-import postService from './post.service';
+import { authenticationError, notFoundError } from "@/helpers/error";
+import requestValidator from "@/helpers/request-validator";
+import { sendPaginatedResponse, sendResponse } from "@/helpers/response";
+import type { RequestHandler } from "express";
+import { broadcastNewPost } from "./post.event";
+import postService from "./post.service";
 import {
   createPostSchema,
   postParamSchema,
   postQuerySchema,
   postSchema,
-} from './post.validator';
+} from "./post.validator";
 
 class PostController {
   createPost: RequestHandler = async (req, res) => {
@@ -21,9 +21,9 @@ class PostController {
     broadcastNewPost(createdPost);
 
     sendResponse<typeof postSchema>(res, {
-      type: 'success',
+      type: "success",
       statusCode: 201,
-      message: 'Post created successfully',
+      message: "Post created successfully",
       data: createdPost,
     });
   };
@@ -34,7 +34,7 @@ class PostController {
 
     sendPaginatedResponse<typeof postSchema>(res, {
       statusCode: 200,
-      message: 'Posts retrieved successfully',
+      message: "Posts retrieved successfully",
       data: {
         items: posts,
         meta: {
@@ -53,9 +53,9 @@ class PostController {
     if (!post) throw notFoundError;
 
     sendResponse<typeof postSchema>(res, {
-      type: 'success',
+      type: "success",
       statusCode: 200,
-      message: 'Post fetched successfully',
+      message: "Post fetched successfully",
       data: post,
     });
   };

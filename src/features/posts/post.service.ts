@@ -1,7 +1,7 @@
-import db from '@/database';
-import { postTable } from '@/database/db-schemas';
-import { ilike } from 'drizzle-orm';
-import type { CreatePostDTO, PostDTO, PostQueryDTO } from './post.validator';
+import db from "@/database";
+import { postTable } from "@/database/db-schemas";
+import { ilike } from "drizzle-orm";
+import type { CreatePostDTO, PostDTO, PostQueryDTO } from "./post.validator";
 
 class PostService {
   async createPost(post: CreatePostDTO): Promise<PostDTO> {

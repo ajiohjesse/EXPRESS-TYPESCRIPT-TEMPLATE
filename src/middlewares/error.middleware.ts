@@ -1,8 +1,8 @@
-import { PublicError } from '@/helpers/error';
-import logger from '@/helpers/logger';
-import { z } from '@/helpers/openapi/zod-extend';
-import { sendResponse } from '@/helpers/response';
-import type { ErrorRequestHandler } from 'express';
+import { PublicError } from "@/helpers/error";
+import logger from "@/helpers/logger";
+import { z } from "@/helpers/openapi/zod-extend";
+import { sendResponse } from "@/helpers/response";
+import type { ErrorRequestHandler } from "express";
 
 const errorDataSchema = z
   .record(z.string(), z.unknown())
@@ -11,14 +11,14 @@ const errorDataSchema = z
 export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   if (err instanceof PublicError) {
     sendResponse<typeof errorDataSchema>(res, {
-      type: 'error',
+      type: "error",
       statusCode: err.statusCode,
       message: err.message,
       data: err.data ?? null,
     });
   } else {
     // Properly capture error details with limited stack trace
-    const stackLines = err.stack?.split('\n').slice(0, 5).join('\n');
+    const stackLines = err.stack?.split("\n").slice(0, 5).join("\n");
     const errorDetails = {
       name: err.name,
       message: err.message,
@@ -27,16 +27,16 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
     };
 
     logger.error({
-      message: 'Unhandled Error',
+      message: "Unhandled Error",
       error: errorDetails,
       url: req.url,
       method: req.method,
     });
 
     sendResponse(res, {
-      type: 'error',
+      type: "error",
       statusCode: 500,
-      message: 'Internal Server Error',
+      message: "Internal Server Error",
       data: null,
     });
   }

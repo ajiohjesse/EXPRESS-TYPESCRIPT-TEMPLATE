@@ -12,25 +12,25 @@ export class PublicError extends Error {
     this.message = message;
     this.statusCode = statusCode;
     this.data = data;
-    this.name = 'PublicError';
+    this.name = "PublicError";
   }
 }
 
 export const authenticationError = new PublicError(
   401,
-  'You are not authenticated'
+  "You are not authenticated"
 );
 
 export const forbiddenError = new PublicError(
   403,
-  'You are not allowed to access this resource'
+  "You are not allowed to access this resource"
 );
 
-export const notFoundError = new PublicError(404, 'Resource not found');
+export const notFoundError = new PublicError(404, "Resource not found");
 
-export const serverError = new PublicError(500, 'Internal Server Error');
+export const serverError = new PublicError(500, "Internal Server Error");
 
 export const rateLimitError = new PublicError(
   429,
-  'Too many requests, try again later'
+  "Too many requests, try again later"
 );

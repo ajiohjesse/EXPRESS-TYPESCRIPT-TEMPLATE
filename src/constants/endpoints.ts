@@ -1,29 +1,29 @@
 export const END_PONITS = {
-  HEALTH_CHECK: '/health-check',
+  HEALTH_CHECK: "/health-check",
 
   SSE: {
-    BASE: '/sse',
+    BASE: "/sse",
   },
 
   DOCS: {
-    UI: '/docs',
-    JSON: '/docs.json',
+    UI: "/docs",
+    JSON: "/docs.json",
   },
 
-  LOGS: '/logs',
+  LOGS: "/logs",
 
   POSTS: {
-    BASE: '/v1/posts',
+    BASE: "/v1/posts",
   },
 
   AUTH: {
-    BASE: '/v1/auth',
-    LOGIN: '/login',
-    REGISTER: '/register',
-    LOGOUT: '/logout',
-    REFRESH_TOKEN: '/refresh-token',
-    FORGOT_PASSWORD: '/forgot-password',
-    RESET_PASSWORD: '/reset-password',
-    VERIFY_EMAIL: '/verify-email',
+    BASE: "/v1/auth",
+    LOGIN: "/login",
+    REGISTER: "/register",
+    LOGOUT: "/logout",
+    REFRESH_TOKEN: "/refresh-token",
+    FORGOT_PASSWORD: "/forgot-password",
+    RESET_PASSWORD: "/reset-password",
+    VERIFY_EMAIL: "/verify-email",
   },
 } as const;

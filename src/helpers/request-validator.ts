@@ -1,6 +1,6 @@
-import type { Request } from 'express';
-import type { z } from 'zod';
-import { PublicError } from './error';
+import type { Request } from "express";
+import type { z } from "zod";
+import { PublicError } from "./error";
 
 interface FieldError {
   path: string[];
@@ -64,7 +64,7 @@ export class RequestValidator {
       if (parsedBody.success) {
         validatedBody = request.body = parsedBody.data;
       } else {
-        errors.push(new ValidationErrorData('body', parsedBody.error));
+        errors.push(new ValidationErrorData("body", parsedBody.error));
       }
     }
 
@@ -73,7 +73,7 @@ export class RequestValidator {
       if (parsedQuery.success) {
         validatedQuery = request.query = parsedQuery.data;
       } else {
-        errors.push(new ValidationErrorData('query', parsedQuery.error));
+        errors.push(new ValidationErrorData("query", parsedQuery.error));
       }
     }
 
@@ -82,12 +82,12 @@ export class RequestValidator {
       if (parsedParams.success) {
         validatedParams = request.params = parsedParams.data;
       } else {
-        errors.push(new ValidationErrorData('params', parsedParams.error));
+        errors.push(new ValidationErrorData("params", parsedParams.error));
       }
     }
 
     if (errors.length > 0) {
-      throw new PublicError(400, 'Request validation failed', { errors });
+      throw new PublicError(400, "Request validation failed", { errors });
     }
 
     return {
@@ -105,13 +105,13 @@ export class RequestValidator {
    * @throws {PublicError} If validation fails.
    */
   validateBody<T extends z.ZodObject<z.ZodRawShape>>(
-    body: Request['body'],
+    body: Request["body"],
     schema: T
   ): z.infer<T> {
     const parsedBody = schema.safeParse(body);
     if (!parsedBody.success) {
-      throw new PublicError(400, 'Invalid request body', {
-        errors: [new ValidationErrorData('body', parsedBody.error)],
+      throw new PublicError(400, "Invalid request body", {
+        errors: [new ValidationErrorData("body", parsedBody.error)],
       });
     }
     return parsedBody.data;
@@ -126,7 +126,7 @@ export class RequestValidator {
    * @throws {PublicError} If required fields fail validation.
    */
   validateQuery<T extends z.ZodObject<z.ZodRawShape>>(
-    query: Request['query'],
+    query: Request["query"],
     schema: T
   ): z.infer<T> {
     const parsedQuery = schema.safeParse(query);
@@ -139,8 +139,8 @@ export class RequestValidator {
     });
 
     if (requiredErrors.length > 0) {
-      throw new PublicError(400, 'Invalid request query parameters', {
-        errors: [new ValidationErrorData('query', parsedQuery.error)],
+      throw new PublicError(400, "Invalid request query parameters", {
+        errors: [new ValidationErrorData("query", parsedQuery.error)],
       });
     }
 
@@ -155,13 +155,13 @@ export class RequestValidator {
    * @throws {PublicError} If validation fails.
    */
   validateParams<T extends z.ZodObject<z.ZodRawShape>>(
-    params: Request['params'],
+    params: Request["params"],
     schema: T
   ): z.infer<T> {
     const parsedParams = schema.safeParse(params);
     if (!parsedParams.success) {
-      throw new PublicError(400, 'Invalid request path parameters', {
-        errors: [new ValidationErrorData('params', parsedParams.error)],
+      throw new PublicError(400, "Invalid request path parameters", {
+        errors: [new ValidationErrorData("params", parsedParams.error)],
       });
     }
     return parsedParams.data;
@@ -182,7 +182,7 @@ export class RequestValidator {
       const def = shape[key]._def;
       if (def.defaultValue !== undefined) {
         defaults[key] =
-          typeof def.defaultValue === 'function'
+          typeof def.defaultValue === "function"
             ? def.defaultValue()
             : def.defaultValue;
       }

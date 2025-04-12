@@ -19,8 +19,7 @@
     "lint": "tsc --noEmit && eslint .",
     "lint:fix": "eslint . --fix",
     "format:check": "prettier --check .",
-    "format": "prettier --write .",
-    "check": "pnpm lint && pnpm format:check"
+    "format": "prettier --write ."
   },
   "sideEffects": [
     "./src/helpers/openapi/zod-extend.ts"
@@ -32,7 +31,10 @@
     "postgres",
     "express starter"
   ],
-  "author": "Jesse Ajioh",
+  "author": {
+    "name": "Jesse Ajioh",
+    "url": "https://gihub.com/ajiohjesse"
+  },
   "license": "MIT",
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^7.3.0",
