@@ -1,4 +1,4 @@
-import { sendResponse } from "@/helpers/response";
+import { sendResponse } from "@/libs/response";
 import type { RequestHandler } from "express";
 
 export const notFoundHandler: RequestHandler = (_, res) => {

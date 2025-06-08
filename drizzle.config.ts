@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { env, getEnvFile } from "@/helpers/env";
+import { env, getEnvFile } from "@/libs/env";
 import { defineConfig } from "drizzle-kit";
 
 console.log({
@@ -9,8 +9,8 @@ console.log({
 });
 
 export default defineConfig({
-  schema: "./src/database/db-schemas.ts",
-  out: "./src/database/migrations",
+  schema: "./src/database/schema",
+  out: "./drizzle/migrations",
   dialect: "postgresql",
   dbCredentials: {
     url: env.DATABASE_URL,

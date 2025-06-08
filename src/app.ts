@@ -8,8 +8,7 @@ import express, { type Response } from "express";
 import helmet from "helmet";
 import { END_PONITS } from "./constants/endpoints";
 import { docsRoute } from "./features/api-docs/docs.route";
-import { logsRoute } from "./features/server-logs/logs.route";
-import { sendResponse } from "./helpers/response";
+import { sendResponse } from "./libs/response";
 import router from "./routes";
 
 const app = express();
@@ -36,7 +35,6 @@ app.get("/", (_, res) => sendHealthCheckResponse(res));
 app.get(END_PONITS.HEALTH_CHECK, (_, res) => sendHealthCheckResponse(res));
 
 app.use(docsRoute);
-app.use(logsRoute);
 
 app.use(requestLogger);
 app.use(rateLimiterMiddleware);

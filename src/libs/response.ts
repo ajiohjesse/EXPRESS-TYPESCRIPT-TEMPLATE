@@ -1,6 +1,6 @@
+import type { APIResponse } from "@/types";
 import type { Response } from "express";
 import type { infer as ZodInfer, ZodSchema } from "zod";
-import type { AppResponseData } from "../types";
 
 type SendResponseWithSchema<T extends ZodSchema> = {
   type: "success" | "error";
@@ -25,7 +25,7 @@ export const sendResponse = <T extends ZodSchema | undefined = undefined>(
 ) => {
   const { type, message, statusCode, data } = props;
 
-  const responseData: AppResponseData<typeof data> = {
+  const responseData: APIResponse<typeof data> = {
     success: type === "success",
     message,
     data: data,
@@ -37,7 +37,6 @@ export const sendResponse = <T extends ZodSchema | undefined = undefined>(
 type PaginatedResponseProps<T extends ZodSchema | undefined = undefined> =
   T extends ZodSchema
     ? {
-        statusCode: number;
         message: string;
         data: {
           items: ZodInfer<T>[];
@@ -60,13 +59,13 @@ export const sendPaginatedResponse = <
   res: Response,
   props: PaginatedResponseProps<T>
 ) => {
-  const { message, statusCode, data } = props;
+  const { message, data } = props;
 
-  const responseData: AppResponseData<typeof data> = {
+  const responseData: APIResponse<typeof data> = {
     success: true,
     message,
     data,
   };
 
-  res.status(statusCode).json(responseData).end();
+  res.status(200).json(responseData).end();
 };

@@ -1,11 +1,13 @@
-import { authenticationError, notFoundError } from "@/helpers/error";
-import requestValidator from "@/helpers/request-validator";
-import { sendPaginatedResponse, sendResponse } from "@/helpers/response";
+import { assertUser } from "@/libs/assert-user";
+import { errors } from "@/libs/errors";
+import logger from "@/libs/logger";
+import requestValidator from "@/libs/request-validator";
+import { sendPaginatedResponse, sendResponse } from "@/libs/response";
 import type { RequestHandler } from "express";
 import { broadcastNewPost } from "./post.event";
 import postService from "./post.service";
 import {
-  createPostSchema,
+  postCreateSchema,
   postParamSchema,
   postQuerySchema,
   postSchema,
@@ -13,10 +15,10 @@ import {
 
 class PostController {
   createPost: RequestHandler = async (req, res) => {
-    const userId = res.locals.userId;
-    if (!userId) throw authenticationError;
+    const userId = assertUser(res);
+    logger.info(userId);
 
-    const post = requestValidator.validateBody(req.body, createPostSchema);
+    const post = requestValidator.validateBody(req.body, postCreateSchema);
     const createdPost = await postService.createPost(post);
     broadcastNewPost(createdPost);
 
@@ -33,7 +35,6 @@ class PostController {
     const { posts, totalPosts } = await postService.getAllPosts(query);
 
     sendPaginatedResponse<typeof postSchema>(res, {
-      statusCode: 200,
       message: "Posts retrieved successfully",
       data: {
         items: posts,
@@ -50,7 +51,7 @@ class PostController {
     const { id } = requestValidator.validateParams(req.params, postParamSchema);
     const post = await postService.getPost(id);
 
-    if (!post) throw notFoundError;
+    if (!post) throw errors.notFoundError;
 
     sendResponse<typeof postSchema>(res, {
       type: "success",

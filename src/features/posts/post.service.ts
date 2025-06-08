@@ -1,12 +1,16 @@
 import db from "@/database";
-import { postTable } from "@/database/db-schemas";
+import { postTable } from "@/database/schema";
 import { ilike } from "drizzle-orm";
-import type { CreatePostDTO, PostDTO, PostQueryDTO } from "./post.validator";
+import type { PostCreateDTO, PostDTO, PostQueryDTO } from "./post.validator";
 
 class PostService {
-  async createPost(post: CreatePostDTO): Promise<PostDTO> {
+  async createPost(post: PostCreateDTO): Promise<PostDTO> {
     const [createdPost] = await db.insert(postTable).values(post).returning();
     return createdPost;
+  }
+
+  private _internal() {
+    return "not implemented";
   }
 
   async getPost(id: number): Promise<PostDTO | undefined> {

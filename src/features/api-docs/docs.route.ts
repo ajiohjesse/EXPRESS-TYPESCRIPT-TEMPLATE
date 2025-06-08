@@ -1,5 +1,5 @@
 import { END_PONITS } from "@/constants/endpoints";
-import { generateOpenApiDocument } from "@/helpers/openapi/openapi-generator";
+import { generateOpenApiDocument } from "@/libs/openapi/openapi-generator";
 import { Router } from "express";
 import swaggerUi from "swagger-ui-express";
 import apiDocsRegistry from "./docs.registry";

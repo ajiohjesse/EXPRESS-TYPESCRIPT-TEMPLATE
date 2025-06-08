@@ -1,10 +1,10 @@
-import { authenticationError } from "@/helpers/error";
-import logger from "@/helpers/logger";
+import { errors } from "@/libs/errors";
+import logger from "@/libs/logger";
 import { type RequestHandler } from "express";
 
 export const authMiddleware: RequestHandler = async (req, res, next) => {
   const bearerToken = req.headers.authorization;
-  if (!bearerToken) throw authenticationError;
+  if (!bearerToken) throw errors.authenticationError;
 
   logger.info(`Bearer token received: ${bearerToken}`);
 

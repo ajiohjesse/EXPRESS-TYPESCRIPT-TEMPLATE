@@ -4,11 +4,11 @@ import {
   getPaginatedResponseSchema,
   openApiNotFoundResponse,
   openApiUnauthenticatedResponse,
-} from "@/helpers/openapi/openapi.helpers";
+} from "@/libs/openapi/openapi-helpers";
 import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
 import { StatusCodes } from "http-status-codes";
 import {
-  createPostSchema,
+  postCreateSchema,
   postParamSchema,
   postQuerySchema,
   postSchema,
@@ -26,7 +26,7 @@ r.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: createPostSchema,
+          schema: postCreateSchema,
         },
       },
     },

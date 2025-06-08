@@ -1,5 +1,5 @@
 import { END_PONITS } from "@/constants/endpoints";
-import logger from "@/helpers/logger";
+import logger from "@/libs/logger";
 import morgan from "morgan";
 
 const stream = {

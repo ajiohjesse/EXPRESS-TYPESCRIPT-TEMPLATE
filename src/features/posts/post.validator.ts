@@ -1,4 +1,4 @@
-import { z } from "@/helpers/openapi/zod-extend";
+import { z } from "@/libs/openapi/zod-extend";
 
 export const postParamSchema = z
   .object({
@@ -18,14 +18,14 @@ export const postQuerySchema = z.object({
 
 export type PostQueryDTO = z.infer<typeof postQuerySchema>;
 
-export const createPostSchema = z
+export const postCreateSchema = z
   .object({
     title: z.string().min(1).openapi({ example: "This is a sample post" }),
     content: z.string().min(1).openapi({ example: "Some sample post content" }),
   })
   .openapi("CreatePost");
 
-export type CreatePostDTO = z.infer<typeof createPostSchema>;
+export type PostCreateDTO = z.infer<typeof postCreateSchema>;
 
 export const postSchema = z
   .object({

@@ -1,6 +1,6 @@
-import { env } from "@/helpers/env";
+import { env } from "@/libs/env";
 import { drizzle } from "drizzle-orm/node-postgres";
-import * as schema from "./db-schemas";
+import * as schema from "./schema";
 
 const db = drizzle(env.DATABASE_URL, {
   schema,
